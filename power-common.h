@@ -34,6 +34,8 @@
 extern "C" {
 #endif
 
+#define NODE_MAX (64)
+
 #define INTERACTIVE_GOVERNOR "interactive"
 #define SCHEDUTIL_GOVERNOR "schedutil"
 
@@ -41,6 +43,8 @@ extern "C" {
 #define HINT_NONE (-1)
 
 #include <hardware/power.h>
+
+#include "power-feature.h"
 
 enum CPU_GOV_CHECK { CPU0 = 0, CPU1 = 1, CPU2 = 2, CPU3 = 3 };
 
