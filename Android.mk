@@ -28,6 +28,8 @@ LOCAL_SRC_FILES := \
     service.cpp \
     Power.cpp
 
+LOCAL_CFLAGS += -Wall -Wextra -Werror
+
 ifneq ($(TARGET_USES_NON_LEGACY_POWERHAL), true)
 LOCAL_SHARED_LIBRARIES := \
     liblog \
