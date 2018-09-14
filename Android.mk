@@ -13,6 +13,7 @@ LOCAL_SHARED_LIBRARIES := \
     libbase \
     libhidlbase \
     libhidltransport \
+    libhwbinder \
     libutils \
     android.hardware.power@1.2
 
@@ -141,6 +142,10 @@ endif
 
 ifeq ($(TARGET_USES_INTERACTION_BOOST),true)
     LOCAL_CFLAGS += -DINTERACTION_BOOST
+endif
+
+ifeq ($(TARGET_ARCH),arm)
+    LOCAL_CFLAGS += -DARCH_ARM_32
 endif
 
 ifneq ($(TARGET_USES_NON_LEGACY_POWERHAL), true)
