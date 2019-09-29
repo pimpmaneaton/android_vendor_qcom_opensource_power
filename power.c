@@ -29,24 +29,24 @@
 
 #define LOG_NIDEBUG 0
 
+#include <dlfcn.h>
 #include <errno.h>
+#include <fcntl.h>
+#include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <fcntl.h>
-#include <dlfcn.h>
-#include <stdlib.h>
 #include <unistd.h>
 
 #define LOG_TAG "QTI PowerHAL"
-#include <utils/Log.h>
 #include <hardware/hardware.h>
 #include <hardware/power.h>
+#include <utils/Log.h>
 
-#include "utils.h"
 #include "hint-data.h"
 #include "performance.h"
 #include "power-common-old.h"
+#include "utils.h"
 
 static struct hint_handles handles[NUM_HINTS];
 
@@ -57,8 +57,7 @@ static struct hw_module_methods_t power_module_methods = {
     .open = power_device_open,
 };
 
-static void power_init(struct power_module *module)
-{
+static void power_init(struct power_module *module) {
     ALOGI("Initing");
 
     for (int i=0; i<NUM_HINTS; i++) {
@@ -68,8 +67,7 @@ static void power_init(struct power_module *module)
 }
 
 int __attribute__ ((weak)) power_hint_override(struct power_module *module, power_hint_t hint,
-        void *data)
-{
+        void *data) {
     return HINT_NONE;
 }
 
@@ -77,8 +75,7 @@ int __attribute__ ((weak)) power_hint_override(struct power_module *module, powe
 void interaction(int duration, int num_args, int opt_list[]);
 
 static void power_hint(struct power_module *module, power_hint_t hint,
-        void *data)
-{
+        void *data) {
     /* Check if this hint has been overridden. */
     if (power_hint_override(module, hint, data) == HINT_HANDLED) {
         /* The power_hint has been handled. We can skip the rest. */
@@ -120,13 +117,11 @@ static void power_hint(struct power_module *module, power_hint_t hint,
     }
 }
 
-int __attribute__ ((weak)) set_interactive_override(struct power_module *module, int on)
-{
+int __attribute__ ((weak)) set_interactive_override(struct power_module *module, int on) {
     return HINT_NONE;
 }
 
-void set_interactive(struct power_module *module, int on)
-{
+void set_interactive(struct power_module *module, int on) {
     if (!on) {
         /* Send Display OFF hint to perf HAL */
         perf_hint_enable(VENDOR_HINT_DISPLAY_OFF, 0);
@@ -143,8 +138,7 @@ void set_interactive(struct power_module *module, int on)
 }
 
 static int power_device_open(const hw_module_t* module, const char* name,
-        hw_device_t** device)
-{
+        hw_device_t** device) {
     int status = -EINVAL;
     if (module && name && device) {
         if (!strcmp(name, POWER_HARDWARE_MODULE_ID)) {

@@ -60,8 +60,7 @@ static void process_video_encode_hint(void *metadata);
 static void process_video_encode_hfr_hint(void *metadata);
 
 int  power_hint_override(struct power_module *module, power_hint_t hint,
-        void *data)
-{
+        void *data) {
     switch(hint) {
         case POWER_HINT_VSYNC:
         {
@@ -82,14 +81,12 @@ int  power_hint_override(struct power_module *module, power_hint_t hint,
     return HINT_NONE;
 }
 
-int  set_interactive_override(struct power_module *module, int on)
-{
+int  set_interactive_override(struct power_module *module, int on) {
     return HINT_HANDLED; /* to set hints for display on and off. Not in use now */
 }
 
 /* Video Encode Hint */
-static void process_video_encode_hint(void *metadata)
-{
+static void process_video_encode_hint(void *metadata) {
     char governor[80] = {0};
     int resource_values[32] = {0};
     int num_resources = 0;
@@ -183,8 +180,7 @@ static void process_video_encode_hint(void *metadata)
 }
 
 /* Video Encode Hint for HFR use cases */
-static void process_video_encode_hfr_hint(void *metadata)
-{
+static void process_video_encode_hfr_hint(void *metadata) {
     char governor[80] = {0};
     int resource_values[32] = {0};
     int num_resources = 0;

@@ -2,18 +2,47 @@ LOCAL_PATH := $(call my-dir)
 
 ifeq ($(call is-vendor-board-platform,QCOM),true)
 
-# HAL module implemenation stored in
-# hw/<POWERS_HARDWARE_MODULE_ID>.<ro.hardware>.so
 include $(CLEAR_VARS)
 
 LOCAL_MODULE_RELATIVE_PATH := hw
-LOCAL_SHARED_LIBRARIES := liblog libcutils libdl libbase libhidlbase libhidltransport libutils android.hardware.power@1.2
-LOCAL_HEADER_LIBRARIES += libhardware_headers
-LOCAL_SRC_FILES := power-common.c metadata-parser.c utils.c list.c hint-data.c service.cpp Power.cpp
+
+LOCAL_SHARED_LIBRARIES := \
+    liblog \
+    libcutils \
+    libdl \
+    libbase \
+    libhidlbase \
+    libhidltransport \
+    libutils \
+    android.hardware.power@1.2
+
+LOCAL_HEADER_LIBRARIES := \
+    libhardware_headers
+
+LOCAL_SRC_FILES := \
+    power-common.c \
+    metadata-parser.c \
+    utils.c \
+    list.c \
+    hint-data.c \
+    service.cpp \
+    Power.cpp
 
 ifneq ($(TARGET_USES_NON_LEGACY_POWERHAL), true)
-LOCAL_SHARED_LIBRARIES := liblog libcutils libdl libxml2
-LOCAL_SRC_FILES := power.c metadata-parser.c utils.c list.c hint-data.c powerhintparser.c
+LOCAL_SHARED_LIBRARIES := \
+    liblog \
+    libcutils \
+    libdl \
+    libxml2
+
+LOCAL_SRC_FILES := \
+    power.c \
+    metadata-parser.c \
+    utils.c \
+    list.c \
+    hint-data.c \
+    powerhintparser.c
+
 endif
 
 ifneq ($(BOARD_POWER_CUSTOM_BOARD_LIB),)
@@ -21,39 +50,39 @@ ifneq ($(BOARD_POWER_CUSTOM_BOARD_LIB),)
 else
 
 # Include target-specific files.
-ifeq ($(call is-board-platform-in-list, msm8974), true)
+ifeq ($(call is-board-platform-in-list,msm8974), true)
 LOCAL_SRC_FILES += power-8974.c
 endif
 
-ifeq ($(call is-board-platform-in-list, msm8226), true)
+ifeq ($(call is-board-platform-in-list,msm8226), true)
 LOCAL_SRC_FILES += power-8226.c
 endif
 
-ifeq ($(call is-board-platform-in-list, msm8610), true)
+ifeq ($(call is-board-platform-in-list,msm8610), true)
 LOCAL_SRC_FILES += power-8610.c
 endif
 
-ifeq ($(call is-board-platform-in-list, apq8084), true)
+ifeq ($(call is-board-platform-in-list,apq8084), true)
 LOCAL_SRC_FILES += power-8084.c
 endif
 
-ifeq ($(call is-board-platform-in-list, msm8909), true)
+ifeq ($(call is-board-platform-in-list,msm8909), true)
 LOCAL_SRC_FILES += power-8909.c
 endif
 
-ifeq ($(call is-board-platform-in-list, msm8916), true)
+ifeq ($(call is-board-platform-in-list,msm8916), true)
 LOCAL_SRC_FILES += power-8916.c
 endif
 
-ifeq ($(call is-board-platform-in-list, msm8992), true)
+ifeq ($(call is-board-platform-in-list,msm8992), true)
 LOCAL_SRC_FILES += power-8992.c
 endif
 
-ifeq ($(call is-board-platform-in-list, msm8994), true)
+ifeq ($(call is-board-platform-in-list,msm8994), true)
 LOCAL_SRC_FILES += power-8994.c
 endif
 
-ifeq ($(call is-board-platform-in-list, msm8996), true)
+ifeq ($(call is-board-platform-in-list,msm8996), true)
 LOCAL_SRC_FILES += power-8996.c
 endif
 
@@ -97,7 +126,7 @@ ifeq ($(call is-board-platform-in-list,msmnile), true)
 LOCAL_SRC_FILES += power-msmnile.c
 endif
 
-endif  #  End of board specific list
+endif # End of board specific list
 
 ifneq ($(TARGET_POWER_SET_FEATURE_LIB),)
     LOCAL_STATIC_LIBRARIES += $(TARGET_POWER_SET_FEATURE_LIB)
@@ -122,6 +151,7 @@ LOCAL_MODULE := android.hardware.power@1.2-service-qti
 LOCAL_INIT_RC := android.hardware.power@1.2-service-qti.rc
 LOCAL_MODULE_TAGS := optional
 LOCAL_VENDOR_MODULE := true
+
 include $(BUILD_EXECUTABLE)
 endif
 
